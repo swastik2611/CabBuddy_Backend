@@ -6,6 +6,7 @@ const PORT=3000
 const {mongoUrl}=require('./models/key')
 
 require('./models/User')
+const requireToken = require('./middleware/requireToken')
 const authRoutes = require('./routes/authRoutes')
 app.use(bodyparser.json());
 app.use(authRoutes)
@@ -26,8 +27,8 @@ app.post('/signup',(req,res)=>{
     res.send("done");
 });
 
-app.get('/',(req,res)=>{
-    res.send("hello world");
+app.get('/',requireToken,(req,res)=>{
+    res.send({email:req.user.email});
 });
 
 app.listen(PORT,()=>{
