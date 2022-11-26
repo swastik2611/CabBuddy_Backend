@@ -28,7 +28,6 @@ const journeySchema = mongoose.Schema({
     },
 });
 mongoose.model('Journey',journeySchema); 
-
 // {
 //     "email": "abcd@gmail.com",
 //     "contact": "1234567890",
