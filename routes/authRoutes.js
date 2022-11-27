@@ -15,8 +15,6 @@ router.post('/signup',async (req,res)=>{
    }catch(err){
        return res.status(422).send(err.message);
    }
-   
-    
 });
 router.post('/journey',async (req,res)=>{
    const{email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant}=req.body;
@@ -29,11 +27,13 @@ router.post('/journey',async (req,res)=>{
        return res.status(422).send(err.message);
    } 
 });
-router.post('/availability',async (req,res)=>{
-    const{from,to,contact,vacant}=req.body;
+router.get('/availability',async (req,res)=>{
+    //const{from,to,contact,vacant}=req.body;
     try{
-        const journey = await Journey.findOne();
+        const journey = await Journey.find();
+        console.log(req.body);
         res.send(journey);
+        // console.log(journey);
     }catch(err){
         return res.status(422).send(err.message);
     }
