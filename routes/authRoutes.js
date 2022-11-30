@@ -5,6 +5,7 @@ const { jwtkey } = require('../models/key');
 const router = express.Router();
 const User = mongoose.model('User');
 const Journey = mongoose.model('Journey');
+const a="128",b="62";
 router.post('/signup',async (req,res)=>{
    const{fname,lname,contact,email,password}=req.body;
    try{
@@ -19,6 +20,7 @@ router.post('/signup',async (req,res)=>{
 router.post('/journey',async (req,res)=>{
    const{email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant}=req.body;
    try{
+    frm=from;
     const journey = new Journey({email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant});
     await journey.save();
     const token = jwt.sign({journeyId:journey._id},jwtkey)
@@ -28,9 +30,9 @@ router.post('/journey',async (req,res)=>{
    } 
 });
 router.get('/availability',async (req,res)=>{
-    //const{from,to,contact,vacant}=req.body;
+    const{frm,too,cntct,vct}=req.body;
     try{
-        const journey = await Journey.find();
+        const journey = await Journey.find({from:{$regex:a},to:{$regex:b}});
         console.log(req.body);
         res.send(journey);
         // console.log(journey);
@@ -55,5 +57,4 @@ router.post('/signin',async (req,res)=>{
         return res.status(422).send({error:"must provide email and password"});
     }
 });
-
 module.exports = router;
