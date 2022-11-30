@@ -29,13 +29,13 @@ app.post('/signup',(req,res)=>{
     res.send("done");
 });
 app.post('/journey',(req,res)=>{
-    console.log(req.body);
+    // console.log(req.body);
     res.send("done ok");
 });
 app.get('/',requireToken,(req,res)=>{
     res.send({email:req.user.email});
 });
-app.get('/availability:key',(req,res)=>{
+app.get('/availability',(req,res)=>{
     // res.send({from:req.journey.from});
     // console.log(res);
     // console.log(req);

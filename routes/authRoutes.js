@@ -1,4 +1,6 @@
 const express = require('express')
+const bodyparser = require("body-parser");
+const app = express();
 const mongoose = require('mongoose')
 const jwt=require('jsonwebtoken');
 const { jwtkey } = require('../models/key');
@@ -6,8 +8,10 @@ const router = express.Router();
 const User = mongoose.model('User');
 const Journey = mongoose.model('Journey');
 const a="128",b="62";
+
 router.post('/signup',async (req,res)=>{
    const{fname,lname,contact,email,password}=req.body;
+   console.log(req.body);
    try{
     const user = new User({fname,lname,contact,email,password});
     await user.save();
@@ -19,8 +23,8 @@ router.post('/signup',async (req,res)=>{
 });
 router.post('/journey',async (req,res)=>{
    const{email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant}=req.body;
+   console.log("body is",req.body);
    try{
-    frm=from;
     const journey = new Journey({email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant});
     await journey.save();
     const token = jwt.sign({journeyId:journey._id},jwtkey)
@@ -29,8 +33,11 @@ router.post('/journey',async (req,res)=>{
        return res.status(422).send(err.message);
    } 
 });
+app.use(bodyparser.json());
 router.get('/availability',async (req,res)=>{
-    const{frm,too,cntct,vct}=req.body;
+    const{from,to,contact,vacant}=await req.body;
+    console.log(req.body);
+    console.log("from",from)
     try{
         const journey = await Journey.find({from:{$regex:a},to:{$regex:b}});
         console.log(req.body);
