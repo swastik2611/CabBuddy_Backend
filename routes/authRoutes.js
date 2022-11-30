@@ -1,6 +1,4 @@
 const express = require('express')
-const bodyparser = require("body-parser");
-const app = express();
 const mongoose = require('mongoose')
 const jwt=require('jsonwebtoken');
 const { jwtkey } = require('../models/key');
@@ -33,11 +31,9 @@ router.post('/journey',async (req,res)=>{
        return res.status(422).send(err.message);
    } 
 });
-app.use(bodyparser.json());
 router.get('/availability',async (req,res)=>{
-    const{from,to,contact,vacant}=await req.body;
+    const{from,to,contact,vacant}=req.body;
     console.log(req.body);
-    console.log("from",from)
     try{
         const journey = await Journey.find({from:{$regex:a},to:{$regex:b}});
         console.log(req.body);
