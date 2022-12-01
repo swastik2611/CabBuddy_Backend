@@ -35,6 +35,10 @@ app.post('/journey',(req,res)=>{
 app.get('/',requireToken,(req,res)=>{
     res.send({email:req.user.email});
 });
+app.post('/demand',(req,res)=>{
+    console.log("bdy",req.body);
+    res.send("done ok");
+})
 app.get('/availability',(req,res)=>{
     // res.send({from:req.journey.from});
     // console.log(res);

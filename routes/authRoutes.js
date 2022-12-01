@@ -5,8 +5,7 @@ const { jwtkey } = require('../models/key');
 const router = express.Router();
 const User = mongoose.model('User');
 const Journey = mongoose.model('Journey');
-const a="128",b="62";
-
+var c="hehe",d="hoho",e="35",f="34";
 router.post('/signup',async (req,res)=>{
    const{fname,lname,contact,email,password}=req.body;
    console.log(req.body);
@@ -31,11 +30,21 @@ router.post('/journey',async (req,res)=>{
        return res.status(422).send(err.message);
    } 
 });
+router.post('/demand',(req,res)=>{
+    const{from,to,contact,vacant}=req.body;
+    console.log("demand",req.body);
+    c=from;
+    d=to;
+    e=contact;
+    f=vacant;
+    console.log("c,d",c,d);
+    res.send({"from":from,"to":to,"contact":contact,"vacant":vacant});
+});
 router.get('/availability',async (req,res)=>{
     const{from,to,contact,vacant}=req.body;
     console.log(req.body);
     try{
-        const journey = await Journey.find({from:{$regex:a},to:{$regex:b}});
+        const journey = await Journey.find({from:{$regex:c},to:{$regex:d},vacant:{$gte:f}});
         console.log(req.body);
         res.send(journey);
         // console.log(journey);
