@@ -45,6 +45,18 @@ app.get('/availability',(req,res)=>{
     // console.log(req);
     res.send("done hhe ok");
 });
+app.post("/profile", (req, res) => {
+  // res.send({from:req.journey.from});
+  // console.log(res);
+  // console.log(req);
+  res.send("done hhe ok");
+});
+app.get("/getprofile", (req, res) => {
+  // res.send({from:req.journey.from});
+  // console.log(res);
+  // console.log(req);
+  res.send("done hhe ok");
+});
 app.listen(PORT,()=>{
     console.log("server is running on",PORT);
 });

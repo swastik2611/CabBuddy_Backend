@@ -6,6 +6,7 @@ const router = express.Router();
 const User = mongoose.model('User');
 const Journey = mongoose.model('Journey');
 var c="hehe",d="hoho",e="35",f="34";
+var eml="1";
 router.post('/signup',async (req,res)=>{
    const{fname,lname,contact,email,password}=req.body;
    console.log(req.body);
@@ -51,6 +52,25 @@ router.get('/availability',async (req,res)=>{
     }catch(err){
         return res.status(422).send(err.message);
     }
+});
+router.get("/getprofile", async (req, res) => {
+  
+  try {
+    const user = await User.find({
+      email: { $regex: eml },
+    });
+    // console.log(req.body);
+    res.send(user);
+    // console.log(journey);
+  } catch (err) {
+    return res.status(422).send(err.message);
+  }
+});
+router.post('/profile', (req, res) => {
+  const {email} = req.body;
+  console.log("email",email);
+  eml=email;
+  res.send({"email":email});
 });
 router.post('/signin',async (req,res)=>{
     const{email,password}=req.body;
