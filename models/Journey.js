@@ -26,6 +26,10 @@ const journeySchema = mongoose.Schema({
         type:Number,
         required:true,
     },
+    fare:{
+        type:Number,
+        required:true,
+    }
 });
 mongoose.model('Journey',journeySchema); 
 // {

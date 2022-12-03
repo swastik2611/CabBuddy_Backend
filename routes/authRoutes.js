@@ -5,7 +5,7 @@ const { jwtkey } = require('../models/key');
 const router = express.Router();
 const User = mongoose.model('User');
 const Journey = mongoose.model('Journey');
-var c="hehe",d="hoho",e="35",f="34";
+var c="hehe",d="hoho",e="35",f="34",g="24";
 var eml="1";
 router.post('/signup',async (req,res)=>{
    const{fname,lname,contact,email,password}=req.body;
@@ -20,10 +20,10 @@ router.post('/signup',async (req,res)=>{
    }
 });
 router.post('/journey',async (req,res)=>{
-   const{email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant}=req.body;
+   const{email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant,fare}=req.body;
    console.log("body is",req.body);
    try{
-    const journey = new Journey({email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant});
+    const journey = new Journey({email,contact,from,to,sourceCoordinates,destinationCoordinates,vacant,fare});
     await journey.save();
     const token = jwt.sign({journeyId:journey._id},jwtkey)
     res.send({token});
@@ -32,12 +32,13 @@ router.post('/journey',async (req,res)=>{
    } 
 });
 router.post('/demand',(req,res)=>{
-    const{from,to,contact,vacant}=req.body;
+    const{from,to,contact,vacant,fare}=req.body;
     console.log("demand",req.body);
     c=from;
     d=to;
     e=contact;
     f=vacant;
+    g=fare;
     console.log("c,d",c,d);
     res.send({"from":from,"to":to,"contact":contact,"vacant":vacant});
 });
